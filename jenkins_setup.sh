@@ -31,16 +31,16 @@ sudo service jenkins stop
 git clone https://github.com/apandey9524/jenkins-config.git
 cp -f jenkins-config/config.xml /var/lib/jenkins/config.xml
 sudo service jenkins start
-wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
-crumbid=$(<crumb.txt)
+#wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+#crumbid=$(<crumb.txt)
 
-sudo curl -X POST -H "$crumbid" -d "" http://localhost:8080/setupWizard/completeInstall
-
+#sudo curl -X POST -H "$crumbid" -d "" http://localhost:8080/setupWizard/completeInstall
+sudo curl -X POST -v -o -  -d "" http://localhost:8080/setupWizard/completeInstall
 #create list of plugins to be installed and install plugins
 pluginlist = $1
 OIFS=$IFS;
 IFS=",";
-PLUGINS=($pluginlist);
+PLUGINS="$pluginlist";
 for ((i=0; i<${#PLUGINS[@]}; ++i)); do
   curl -X POST -d "<jenkins><install plugin=${PLUGINS[$i]}/></jenkins>" -H 'Content-Type:text/xml'  http://localhost:8080/pluginManager/installNecessaryPlugins   
 done
