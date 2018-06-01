@@ -38,13 +38,15 @@ sudo service jenkins start
 jenkinspublicip=$(curl ipinfo.io/ip)
 sudo curl -X POST -v -o -  -d "" http://"$jenkinspublicip":8080/setupWizard/completeInstall
 #create list of plugins to be installed and install plugins
-pluginlist = "$1"
-for i in "${pluginlist[@]}"
-do
-	curl -X POST -d "<jenkins><install plugin=$i/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins   
-   # do whatever on $i
-done
 
+pluginlist = "$1"
+def_ifs=$IFS
+IFS=','
+read -ra PLUGINS <<< "$pluginlist"
+for i in "${PLUGINS[@]}"; do
+	curl -X POST -d "<jenkins><install plugin=$i/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+done
+IFS=$def_ifs
 # for ((i=0; i<${#PLUGINS[@]}; ++i)); do
   # curl -X POST -d "<jenkins><install plugin=${PLUGINS[$i]}/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins   
 # done
