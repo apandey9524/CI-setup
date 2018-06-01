@@ -8,8 +8,8 @@ git clone https://github.com/apandey9524/jenkin-job-templates.git
 cd jenkin-job-templates
 git checkout dotnetcore-job-template
 cp -f template-config.xml job-config.xml
-sudo sed -i "s/<useSecurity>true/<useSecurity>false/g" /var/lib/jenkins/config.xml
-sudo sed -i "s/\-\-GITREPO\-\-/${GITREPO}/g" job-config.xml
-sudo sed -i "s/\-\-GITBRANCHNAME\-\-/${GITBRANCHNAME}/g" job-config.xml
-sudo sed -i "s/\-\-TARGETFILEPATH\-\-/${TARGETFILEPATH}/g" job-config.xml
-sudo sed -i "s/\-\-MAILINGLIST\-\-/${MAILINGLIST}" job-config.xml
+# sudo sed -i "s/<useSecurity>true/<useSecurity>false/g" /var/lib/jenkins/config.xml
+# sudo sed -i "s/\-\-GITREPO\-\-/${GITREPO}/g" job-config.xml
+# sudo sed -i "s/\-\-GITBRANCHNAME\-\-/${GITBRANCHNAME}/g" job-config.xml
+# sudo sed -i "s/\-\-TARGETFILEPATH\-\-/${TARGETFILEPATH}/g" job-config.xml
+# sudo sed -i "s/\-\-MAILINGLIST\-\-/${MAILINGLIST}" job-config.xml
