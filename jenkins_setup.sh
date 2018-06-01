@@ -35,7 +35,7 @@ sudo service jenkins start
 #crumbid=$(<crumb.txt)
 
 #sudo curl -X POST -H "$crumbid" -d "" http://localhost:8080/setupWizard/completeInstall
-jenkinspublicip=curl ipinfo.io/ip
+jenkinspublicip=$(curl ipinfo.io/ip)
 sudo curl -X POST -v -o -  -d "" http://"$jenkinspublicip":8080/setupWizard/completeInstall
 #create list of plugins to be installed and install plugins
 pluginlist = "$1"
