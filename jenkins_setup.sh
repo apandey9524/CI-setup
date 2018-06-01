@@ -30,16 +30,17 @@ sudo service jenkins stop
 # sudo sed -i "s/securityRealm>/securityRealm-->/g" /var/lib/jenkins/config.xml
 git clone https://github.com/apandey9524/jenkins-config.git
 cp -f jenkins-config/config.xml /var/lib/jenkins/config.xml
-sudo service jenkins start
+sudo service jenkins restart
 #wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
 #crumbid=$(<crumb.txt)
 
 #sudo curl -X POST -H "$crumbid" -d "" http://localhost:8080/setupWizard/completeInstall
 jenkinspublicip=$(curl ipinfo.io/ip)
+sleep 30
 sudo curl -X POST -o - -d "" http://"$jenkinspublicip":8080/setupWizard/completeInstall
 #create list of plugins to be installed and install plugins
 
-pluginlist = $1
+pluginlist="$1"
 echo $pluginlist
 def_ifs=$IFS
 IFS=','
