@@ -12,4 +12,3 @@ sudo sed -i "s/\-\-GITREPO\-\-//g${GITREPO}" job-config.xml
 sudo sed -i "s/\-\-GITBRANCHNAME\-\-//g${GITBRANCHNAME}" job-config.xml
 sudo sed -i "s/\-\-TARGETFILEPATH\-\-//g${TARGETFILEPATH}" job-config.xml
 sudo sed -i "s/\-\-MAILINGLIST\-\-//g${MAILINGLIST}" job-config.xml
-

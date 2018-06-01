@@ -24,19 +24,30 @@ sudo apt-get update
 sudo apt-get install jenkins
 
 #disable security for jenkins and restart
-sudo service jenkins restart
-sed -i "s/<useSecurity>true/<useSecurity>false/g" /var/lib/jenkins/config.xml
-sed -i "s/<authorizationStrategy/<\!--authorizationStrategy/g" /var/lib/jenkins/config.xml
-sed -i "s/securityRealm>/securityRealm-->/g" /var/lib/jenkins/config.xml
-sudo service jenkins restart
+service jenkins stop
+sudo sed -i "s/<useSecurity>true/<useSecurity>false/g" /var/lib/jenkins/config.xml
+sudo sed -i "s/<authorizationStrategy/<\!--authorizationStrategy/g" /var/lib/jenkins/config.xml
+sudo sed -i "s/securityRealm>/securityRealm-->/g" /var/lib/jenkins/config.xml
+service jenkins start
+wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+crumbid=$(<crumb.txt)
+curl -X POST -H "Jenkins-Crumb:$crumbid" -d "" http://localhost:8080/setupWizard/completeInstall
 
 #create list of plugins to be installed and install plugins
-pluginlist = "$1" >> plugins.txt
-IFS=',' read -ra PLUGINS <<< "$pluginlist"
-for plugin in "${PLUGINS[@]}"; do
-    # process "$i"
-	curl -X POST -d "<jenkins><install plugin=$plugin /></jenkins>" -H 'Content-Type:text/xml'  http://localhost:8080/pluginManager/installNecessaryPlugins   
+pluginlist = "$1"
+OIFS=$IFS;
+IFS=",";
+PLUGINS=($pluginlist);
+for ((i=0; i<${#PLUGINS[@]}; ++i)); do
+  curl -X POST -d "<jenkins><install plugin=${PLUGINS[$i]}/></jenkins>" -H 'Content-Type:text/xml'  http://localhost:8080/pluginManager/installNecessaryPlugins   
 done
+
+# pluginlist = "$1"
+# IFS=',' read -ra PLUGINS <<< "$pluginlist"
+# for plugin in "${PLUGINS[@]}"; do
+    # # process "$i"
+        # curl -X POST -d "<jenkins><install plugin=$plugin /></jenkins>" -H 'Content-Type:text/xml'  http://localhost:8080/pluginManager/installNecessaryPlugins
+# done
 
 #add webhook to jenkins config
 
@@ -50,6 +61,3 @@ MAILINGLIST="$5"
 
 #post job creation request to localhost
 curl -X POST -d @job-config.xml -H "Content-Type:application/xml" http://localhost:8080/createItem?name=dotnetcore_app
-
-
-
