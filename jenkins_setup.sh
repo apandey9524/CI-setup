@@ -50,10 +50,10 @@ sudo curl -X POST -o - -d "" http://"$jenkinspublicip":8080/setupWizard/complete
 # done
 # IFS=$def_ifs
 
-plugins=(build-timeout@1.19  email-ext@2.62  file-operations@1.7  github@1.29.0  gradle@1.29  postbuild-task@1.8  msbuild@1.29  workflow-aggregator@2.5  pipeline-github-lib@1.0  s3@0.11.2  timestamper@1.8.10  ws-cleanup@0.34)
-for i in "${plugins[@]}"; do
-	 curl -X POST -d "<jenkins><install plugin=$i/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
- done
+# plugins=(build-timeout@1.19  email-ext@2.62  file-operations@1.7  github@1.29.0  gradle@1.29  postbuild-task@1.8  msbuild@1.29  workflow-aggregator@2.5  pipeline-github-lib@1.0  s3@0.11.2  timestamper@1.8.10  ws-cleanup@0.34)
+# for i in "${plugins[@]}"; do
+	 # curl -X POST -d "<jenkins><install plugin=$i/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+ # done
 # for ((i=0; i<${#PLUGINS[@]}; ++i)); do
   # curl -X POST -d "<jenkins><install plugin=${PLUGINS[$i]}/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins   
 # done
