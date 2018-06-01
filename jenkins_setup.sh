@@ -35,14 +35,15 @@ sudo service jenkins start
 #crumbid=$(<crumb.txt)
 
 #sudo curl -X POST -H "$crumbid" -d "" http://localhost:8080/setupWizard/completeInstall
-sudo curl -X POST -v -o -  -d "" http://localhost:8080/setupWizard/completeInstall
+jenkinspublicip=curl ipinfo.io/ip
+sudo curl -X POST -v -o -  -d "" http://"$jenkinspublicip":8080/setupWizard/completeInstall
 #create list of plugins to be installed and install plugins
-pluginlist = $1
-OIFS=$IFS;
-IFS=",";
-PLUGINS="$pluginlist";
+pluginlist = "$1"
+OIFS=$IFS
+IFS=","
+PLUGINS="$pluginlist"
 for ((i=0; i<${#PLUGINS[@]}; ++i)); do
-  curl -X POST -d "<jenkins><install plugin=${PLUGINS[$i]}/></jenkins>" -H 'Content-Type:text/xml'  http://localhost:8080/pluginManager/installNecessaryPlugins   
+  curl -X POST -d "<jenkins><install plugin=${PLUGINS[$i]}/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins   
 done
 
 # pluginlist = "$1"
@@ -63,4 +64,4 @@ MAILINGLIST="$5"
 ./createJobConfig.sh "$GITREPO" "$GITBRANCHNAME" "$TARGETFILEPATH" "$MAILINGLIST"
 
 #post job creation request to localhost
-curl -X POST -d @job-config.xml -H "Content-Type:application/xml" http://localhost:8080/createItem?name=dotnetcore_app
+curl -X POST -d @job-config.xml -H "Content-Type:application/xml" http://"$jenkinspublicip":8080/createItem?name=dotnetcore_app
