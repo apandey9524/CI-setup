@@ -76,4 +76,4 @@ MAILINGLIST="$5"
 ./createJobConfig.sh "$GITREPO" "$GITBRANCHNAME" "$TARGETFILEPATH" "$MAILINGLIST"
 
 #post job creation request to localhost
-curl -X POST -d @job-config.xml -H "Content-Type:application/xml" http://"$jenkinspublicip":8080/createItem?name=dotnetcore_app
+sudo curl -X POST -d @job-config.xml -H "Content-Type:application/xml" http://"$jenkinspublicip":8080/createItem?name=dotnetcore_app
