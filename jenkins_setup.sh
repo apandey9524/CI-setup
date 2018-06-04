@@ -30,24 +30,24 @@ sudo service jenkins stop
 # sudo sed -i "s/securityRealm>/securityRealm-->/g" /var/lib/jenkins/config.xml
 git clone https://github.com/apandey9524/jenkins-config.git
 cp -f jenkins-config/config.xml /var/lib/jenkins/config.xml
-sudo service jenkins restart
-sudo wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
-crumbid=$(<crumb.txt)
+sudo service jenkins start
+# sudo wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+# crumbid=$(<crumb.txt)
 jenkinspublicip=$(curl ipinfo.io/ip)
 sleep 20
-sudo curl -X POST -H "$crumbid" -d "" -o - http://"$jenkinspublicip":8080/setupWizard/completeInstall
+sudo curl -X POST  -d "" -o - http://"$jenkinspublicip":8080/setupWizard/completeInstall
 #sudo curl -X POST -o - -d "" http://"$jenkinspublicip":8080/setupWizard/completeInstall
 #create list of plugins to be installed and install plugins
-curl -X POST -d "<jenkins><install plugin=build-timeout@1.19/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=email-ext@2.62/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=file-operations@1.7/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=github@1.29.0/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=postbuild-task@1.8/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=msbuild@1.29/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=pipeline-github-lib@1.0/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=s3@0.11.2/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=timestamper@1.8.10/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
-curl -X POST -d "<jenkins><install plugin=ws-cleanup@0.34/></jenkins>" -H 'Content-Type:text/xml' -H "$crumbid" http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=build-timeout@1.19/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=email-ext@2.62/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=file-operations@1.7/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=github@1.29.0/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=postbuild-task@1.8/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=msbuild@1.29/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=pipeline-github-lib@1.0/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=s3@0.11.2/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=timestamper@1.8.10/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
+curl -X POST -d "<jenkins><install plugin=ws-cleanup@0.34/></jenkins>" -H 'Content-Type:text/xml'  http://"$jenkinspublicip":8080/pluginManager/installNecessaryPlugins
 # pluginlist="$1"
 # echo $pluginlist
 # def_ifs=$IFS
@@ -85,4 +85,4 @@ MAILINGLIST="$5"
 pwd
 ls -a
 #post job creation request to localhost
-sudo curl -X POST -H "Content-Type:application/xml" -H "$crumbid" -d @job-config.xml  http://"$jenkinspublicip":8080/createItem?name=dotnetcore_app
+sudo curl -X POST -H "Content-Type:application/xml"  -d @job-config.xml  http://"$jenkinspublicip":8080/createItem?name=dotnetcore_app
