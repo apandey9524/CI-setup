@@ -34,9 +34,10 @@ sudo service jenkins restart
 # sudo wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
 # crumbid=$(<crumb.txt)
 #jenkinspublicip=$(curl ipinfo.io/ip)
-crumbheader = $(wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
+crumbheader = $(wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document - 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)')
+echo $ crumbheader
 sleep 20
-sudo curl -X POST  -d "" -H "$crumbheader" -o - http://lcoalhost:8080/setupWizard/completeInstall
+sudo curl -X POST  -d "" -H "$crumbheader" -o - http://localhost:8080/setupWizard/completeInstall
 sudo service jenkins restart
 #sudo curl -X POST -o - -d "" http://"$jenkinspublicip":8080/setupWizard/completeInstall
 #create list of plugins to be installed and install plugins
