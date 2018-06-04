@@ -9,6 +9,7 @@ cd jenkin-job-templates
 git checkout dotnetcore-job-template
 mv template-config.xml job-config.xml
 chmod +r job-config.xml
+ls -a
 # sudo sed -i "s/<useSecurity>true/<useSecurity>false/g" /var/lib/jenkins/config.xml
 # sudo sed -i "s/\-\-GITREPO\-\-/${GITREPO}/g" job-config.xml
 # sudo sed -i "s/\-\-GITBRANCHNAME\-\-/${GITBRANCHNAME}/g" job-config.xml

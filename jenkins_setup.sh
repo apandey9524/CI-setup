@@ -8,20 +8,20 @@
 # sudo apt-get install oracle-java8-set-default
 
 # #install git
-# sudo apt install git
+ sudo apt install git
 
 # #install dotnetcore
-# wget -q packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
-# sudo dpkg -i packages-microsoft-prod.deb
-# sudo apt-get install apt-transport-https
-# sudo apt-get update
-# sudo apt-get install dotnet-sdk-2.1.200 -y
+ wget -q packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
+ sudo dpkg -i packages-microsoft-prod.deb
+ sudo apt-get install apt-transport-https
+ sudo apt-get update
+ sudo apt-get install dotnet-sdk-2.1.200 -y
 
 # #install and start jenkins 
-# wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-# sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-# sudo apt-get update
-# sudo apt-get install jenkins -y
+ wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+ sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+ sudo apt-get update
+ sudo apt-get install jenkins -y
 sudo ufw allow 8080
 #disable security for jenkins and restart
 sudo service jenkins stop
@@ -83,8 +83,8 @@ GITREPO="$2"
 GITBRANCHNAME="$3"
 TARGETFILEPATH="$4"
 MAILINGLIST="$5"
-./createJobConfig.sh "$GITREPO" "$GITBRANCHNAME" "$TARGETFILEPATH" "$MAILINGLIST"
 pwd
+./createJobConfig.sh "$GITREPO" "$GITBRANCHNAME" "$TARGETFILEPATH" "$MAILINGLIST"
 ls -a
 #post job creation request to localhost
 sudo curl -X POST -H "Content-Type:application/xml" -H "$crumbheader" -d @job-config.xml  http://localhost:8080/createItem?name=dotnetcore_app
