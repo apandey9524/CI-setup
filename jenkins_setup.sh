@@ -35,7 +35,7 @@ sudo service jenkins restart
 # crumbid=$(<crumb.txt)
 #jenkinspublicip=$(curl ipinfo.io/ip)
 sleep 10
-crumbheader = $(wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document - 'http://localhost:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)' )
+crumbheader="`wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document - 'http://localhost:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)' `"
 echo $crumbheader
 
 sudo curl -X POST  -d "" -H "$crumbheader" -o - http://localhost:8080/setupWizard/completeInstall
