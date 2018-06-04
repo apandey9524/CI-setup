@@ -8,29 +8,29 @@
 # sudo apt-get install oracle-java8-set-default
 
 # #install git
- sudo apt install git
+sudo apt install git
 
 # #install dotnetcore
- wget -q packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
- sudo dpkg -i packages-microsoft-prod.deb
- sudo apt-get install apt-transport-https
- sudo apt-get update
- sudo apt-get install dotnet-sdk-2.1.200 -y
+wget -q packages-microsoft-prod.deb https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt-get install apt-transport-https
+sudo apt-get update
+sudo apt-get install dotnet-sdk-2.1.200 -y
 
 # #install and start jenkins 
- wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
- sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
- sudo apt-get update
- sudo apt-get install jenkins -y
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins -y
 sudo ufw allow 8080
 #disable security for jenkins and restart
-sudo service jenkins stop
+sudo service jenkins restart
 # sudo sed -i "s/<useSecurity>true/<useSecurity>false/g" /var/lib/jenkins/config.xml
 # sudo sed -i "s/<authorizationStrategy/<\!--authorizationStrategy/g" /var/lib/jenkins/config.xml
 # sudo sed -i "s/securityRealm>/securityRealm-->/g" /var/lib/jenkins/config.xml
 git clone https://github.com/apandey9524/jenkins-config.git
 cp -f jenkins-config/config.xml /var/lib/jenkins/config.xml
-sudo service jenkins start
+sudo service jenkins restart
 # sudo wget -q --auth-no-challenge --user USERNAME --password PASSWORD --output-document crumb.txt 'http://localhost:8080//crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
 # crumbid=$(<crumb.txt)
 #jenkinspublicip=$(curl ipinfo.io/ip)
